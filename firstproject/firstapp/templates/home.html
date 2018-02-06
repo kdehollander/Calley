@@ -1,0 +1,123 @@
+{% extends "default.html" %}
+{% load static %}
+{% load i18n staticfiles %}
+
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<!-- Start Top Bar -->
+<div class="top-bar" id="main-menu">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li class="menu-text">Calley</li>
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="dropdown menu" data-dropdown-menu>
+      {% if user.is_authenticated %}
+      <li><a href="/logout/">Logout</a></li>
+      {% else %}
+      <li><a href="/login/">Log In</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+<!-- End Top Bar -->
+<div class="callout large primary">
+  <div class="row column text-center">
+    <h1>Calley</h1>
+    <h3>The Smart Calendar App</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    {% if user.is_authenticated %}
+      <h3>Welcome {{ user.username }}</h3>
+    {% endif %}
+    {% if user.is_authenticated %}
+
+	      <div class = "large-12 columns">
+	      <div class = "large-4 columns">
+		     <h5>Events</h5>
+             <div id="event_list">
+                <ul>
+                {% for element in events %}
+                   <li>{{ element.name }}
+				   <a href = "/user={{user.username}}/event={{element.name}}/">view  </a>
+				   <a href = "/user={{user.username}}/event={{element.name}}/edit/">edit </a>
+				   <a href = "/user={{user.username}}/event={{element.name}}/delete/"> delete </a></li>
+                {% endfor %}
+                </ul>
+             </div>
+			 <div class ="row">
+			    <a href="/create_event/group={{user.username}}private/">create event</a>
+			 </div>
+		     <h5>Groups</h5>
+             <div id="group_list">
+             <ul>
+             {% for element in groups %}
+                <li>{{ element.title }}
+				<a href = "/view/{{element.token}}/">view  </a>
+				{% if element.title != "Private" %}
+           <a href = "/chat/{{element.token}}/">chat</a>
+				   <a href = "/user={{user.username}}/group={{element.title}}/edit/">edit </a>
+				   <a href = "/user={{user.username}}/group={{element.title}}/delete/"> delete </a></li>
+				{% endif %}
+             {% endfor %}
+             </ul>
+             </div>
+			 <div class ="row">
+			    <a href="/create_group/">create group</a>
+			 </div>
+			 <div class ="row">
+			    <a href="/enter_group/">enter group</a>
+			 </div>
+       <div class = "row">
+  	      <div class = "large-12 columns">
+  			 <div class = "large-6 columns">
+  		        <h5>Friends</h5>
+                  <div id="friend_list">
+                  <ul>
+                  {% for element in content %}
+                      <li>{{ element.friend }}</li>
+                  {% endfor %}
+                  </ul>
+                  </div>
+  			</div>
+  		  </div>
+  	   </div>
+          </div>
+	      <div class = "large-6 columns">
+		     <h5>Calendar</h5>
+         <div class = "large-12 columns", id = "calendar"></div>
+         <script type="text/javascript" src='{% static "js/vendor/jquery.js" %}'></script>
+         <script src="{% static "moment/moment.js" %}"></script>
+         <script src="{% static "fullcalendar/dist/fullcalendar.js" %}"></script>
+         <script type='text/javascript'>
+         $(document).ready(function() {
+            // page is now ready, initialize the calendar...
+            $('#calendar').fullCalendar({
+               // put your options and callbacks here
+
+            })
+         });
+        </script>
+      </div>
+		  </div>
+
+    {% else %}
+    <p> Log in to view your calendar!</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+
+{% endblock %}

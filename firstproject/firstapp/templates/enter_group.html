@@ -1,0 +1,25 @@
+{% extends "default.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-4 large-centered columns">
+    <form method="post" action="{% url 'enter_group' %}">
+      {% csrf_token %}
+        <h4 class="text-center">Join Group</h4>
+        {{ form.errors }}
+        <label>{{ form.token.label_tag }}</label>
+          {{ form.token }}
+
+        <label>{{ form.password.label_tag }}</label>
+          {{ form.password }}
+
+        <input type="submit" class="button expanded" value="Join Group">
+        <a href="/">Cancel
+    </form>
+  </div>
+</div>
+{% endblock %}

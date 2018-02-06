@@ -1,0 +1,58 @@
+{% extends "default.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+   <div class="row">
+      <div class="large-12 columns">
+		 <div class = "row">
+		    <h3>{{record.title}}</h3>
+		 </div>
+		 <div class = "large-6 columns">
+		    <h3>Events</h3>
+			<ul>
+			{% for element in events %}
+			   <li>{{element.name}}</li>
+         {{element.datetime}} - {{element.datetime_end}}
+			{% endfor %}
+			</ul>
+			<div class ="row">
+			   <a href="/create_event/group={{record.token}}/">create event</a>
+			</div>
+		 </div>
+		 <div class = "large-6 columns">
+		    <h3>Calendar</h3>
+        <div class = "large-12 columns", id = "calendar"></div>
+        <script type="text/javascript" src='{% static "js/vendor/jquery.js" %}'></script>
+        <script src="{% static "moment/moment.js" %}"></script>
+        <script src="{% static "fullcalendar/dist/fullcalendar.js" %}"></script>
+        <script type='text/javascript'>
+        $(document).ready(function() {
+           // page is now ready, initialize the calendar...
+           $('#calendar').fullCalendar({
+              // put your options and callbacks here
+              'events' : {{calevents}} ,
+           })
+        });
+       </script>
+		 </div>
+	  </div>
+	  {% if record.title != "Private" %}
+      <div class = "large-12 columns">
+		    <h5>Users</h5>
+        <ul>
+           {% for u in record.users.all %}
+              <li>{{u.username}} <a href = "/chat/{{u.username}}">Chat</a></li>
+           {% endfor%}
+        </ul>
+      </div>
+	  {% endif %}
+   <a href="/">Cancel
+   </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

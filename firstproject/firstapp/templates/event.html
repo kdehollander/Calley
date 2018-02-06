@@ -1,0 +1,40 @@
+{% extends "default.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-4 large-centered columns">
+	 <div class = "row">
+        <h5>Name</h5>
+        {{record.name}}
+     </div>
+	 <div class = "row">
+        <h5>Time</h5>
+		{{record.datetime}}
+     </div>
+	 <div class = "row">
+        <h5>End Time</h5>
+		{{record.datetime_end}}
+     </div>
+	 <div class = "row">
+        <h5>Type</h5>
+		{{record.event_type}}
+     </div>
+	 <div class = "large-6 collumns">
+        <div class ="row">
+		   <h5>Comments</h5>
+		</div>
+		   Enter Comment:<br>
+           {{ form.comment }}
+		   <input type = "submit" class = "button expanded", value="Comment">
+		{% for element in comments %}
+		   <li>{{ element.user }}: {{element.comment}}</li>
+		{% endfor %}
+	 </div>
+   <a href="/">Cancel
+  </div>
+</div>
+{% endblock %}

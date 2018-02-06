@@ -1,0 +1,42 @@
+{% extends "default.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<h1>{{ room.label }}</h1>
+ <p>
+   <label for="handle">Your name:</label>
+   <input id="handle" type="hidden" value={{request.user.username}}>
+ </p>
+ <form id="chatform">
+   <table id="chat">
+     <tbody>
+       {% for message in messages %}
+         <tr>
+           <td>{{ message.formatted_timestamp }}</td>
+           <td>{{ message.handle }}</td>
+           <td>{{ message.message }}</td>
+         </tr>
+       {% endfor %}
+     </tbody>
+     <tfoot>
+     <tr>
+       <td>Chat:</td>
+       <td colspan=2>
+         <input id="message" type="text" placeholder="message">
+         <button type="submit" id="go" handle={{request.user.username}}>Send</button>
+       </td>
+     </tfoot>
+   </table>
+ </form>
+ <a href="/">Leave Chat
+{% endblock %}
+
+{% block afterbody %}
+  <script type="text/javascript" src='{% static "js/vendor/jquery.js" %}'></script>
+  <script type="text/javascript" src='{% static "reconnecting-websocket.js" %}'></script>
+  <script type="text/javascript" src='{% static "js/chat.js" %}'></script>
+{% endblock afterbody %}

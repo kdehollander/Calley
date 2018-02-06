@@ -1,0 +1,33 @@
+{% extends "default.html" %}
+{% load static %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-4 large-centered columns">
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="row column log-in-form">
+        <h4 class="text-center">{{ title }}</h4>
+        {{ form.errors }}
+        <label>{{ form.name.label_tag }}</label>
+          {{ form.name }}
+
+        <label>{{ form.datetime.label_tag }}</label>
+          {{ form.datetime }}
+
+        <label>{{ form.datetime_end.label_tag }}</label>
+          {{ form.datetime_end }}
+
+        <label>{{ form.event_type.label_tag }}</label>
+          {{ form.event_type }}
+        <input type="submit" class="button expanded" value={{title}}>
+        <a href="/">Cancel
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,2 @@
+How to display schedule.calendar.html in my templates/home.html
+Populate form for EditEvent/EditGroup
